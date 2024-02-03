@@ -2,12 +2,20 @@
 
 
 const express = require("express");
-
-const app = express();
+const companiesRoutes = require("./routes/companies");
+const invoicesRoutes = require("./routes/invoices");
 const ExpressError = require("./expressError")
 
-app.use(express.json());
+const app = express();
 
+app.use(express.json());
+app.use("/companies", companiesRoutes);
+app.use("/invoices", invoicesRoutes);
+
+/** Home page */
+app.get('/', function(req, res) {
+  return res.send('Hello world!');
+})
 
 /** 404 handler */
 
@@ -27,5 +35,8 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.listen(3000, function () {
+  console.log("Listening on 3000");
+});
 
 module.exports = app;
